@@ -1,4 +1,5 @@
 import sys
+import time
 import torch
 import pandas as pd
 import sklearn
@@ -27,10 +28,13 @@ def main():
         print("Accelerator: CPU only")
 
     # Tensor computation
+    start_time = time.time()
     x = torch.tensor([1.0, 2.0, 3.0], device=device)
+    elapsed_time = time.time() - start_time
 
     print("Tensor computation result:", x)
     print("Device used:", x.device)
+    print(f"Time taken: {elapsed_time:.6f} seconds")
 
 if __name__ == "__main__":
     main()
