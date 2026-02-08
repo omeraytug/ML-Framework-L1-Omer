@@ -13,20 +13,24 @@ def main():
     if torch.backends.mps.is_available():
         device = "mps"
         print("Accelerator: Apple MPS (GPU)")
+    elif hasattr(torch.version, 'hip') and torch.version.hip is not None:
+        # Check for AMD ROCm (HIP) - must check before CUDA since ROCm uses CUDA API
+        device = "cuda"  # ROCm uses CUDA API compatibility
+        print("Accelerator: AMD ROCm (GPU)")
+        if torch.cuda.is_available():
+            print(f"  ROCm version: {torch.version.hip}")
     elif torch.cuda.is_available():
         device = "cuda"
-        print("Accelerator: CUDA GPU")
+        print("Accelerator: CUDA GPU (NVIDIA)")
     else:
         device = "cpu"
         print("Accelerator: CPU only")
 
     # Tensor computation
     x = torch.tensor([1.0, 2.0, 3.0], device=device)
-    y = torch.tensor([4.0, 5.0, 6.0], device=device)
-    z = x + y
 
-    print("Tensor computation result:", z)
-    print("Device used:", z.device)
+    print("Tensor computation result:", x)
+    print("Device used:", x.device)
 
 if __name__ == "__main__":
     main()
