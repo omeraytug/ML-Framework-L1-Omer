@@ -11,7 +11,14 @@ The environment includes:
 
 All dependencies are locked in `uv.lock`.
 
+## Setup
+First, sync the dependencies:
+```bash
+uv sync
+```
+
 ## Verification
 Run the verification script:
 ```bash
 uv run check_env.py
+```
